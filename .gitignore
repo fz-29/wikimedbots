@@ -1,0 +1,9 @@
+.DS_Store
+.ipynb_checkpoints/
+apicache-py3
+throttle.ctrl
+user-config.py
+user-password.py
+*.log
+pywikibot.lwp
+*.ipynb
