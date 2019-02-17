@@ -70,16 +70,16 @@ def find_reference_in_templates_to_be_updated(wikicode, template_flags):
         if template.name.strip_code().strip().lower() in template_flags.keys():
             for param in template.params:
                 param_value = str(param.value)
-                cite_find = re.findall('(<ref name=[^\/>]*>.+<\/ref>)', param_value)
-                if len(cite_find) > 0:
-                    ref_name_find = re.findall('<ref name=([^\/>]*)>.+<\/ref>', cite_find[0])
+                re_cite_finds = re.findall('(<ref name=[^\/>]*>.+?<\/ref>)', param_value)
+                for cite_find in re_cite_finds:
+                    ref_name_find = re.findall('<ref name=([^\/>]*)>.+<\/ref>', cite_find)
                     if len(ref_name_find) > 0 and ref_name_find[0] not in ref_map.keys():
-                        cite_content = re.findall('<ref name=[^\/>]*>(.*)<\/ref>', cite_find[0])[0]
+                        cite_content = re.findall('<ref name=[^\/>]*>(.*)<\/ref>', cite_find)[0]
                         ref_map[ref_name_find[0]] = {
                             "state": 0,
                             "template": template.name.strip_code().strip().lower(),
                             "param_object": param,
-                            "ref_markup": cite_find[0],
+                            "ref_markup": cite_find,
                             "cite_content": cite_content
                         }
     
